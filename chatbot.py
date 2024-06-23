@@ -54,7 +54,7 @@ def get_chatbot_response(message):
     if 'hours' in message.lower():
         return 'We are open from 9 AM to 9 PM every day.'
     else:
-        return 'I am sorry, I didn\'t understand that. Can you please rephrase?'
+        return 'I am sorry, I didn\'t understand that.'
 
 if __name__ == '__main__':
     message = sys.argv[1]

@@ -1,5 +1,4 @@
 import sys
-import re
 from datetime import datetime
 
 today = datetime.today()
@@ -13,8 +12,8 @@ menu = {
     "Wednesday": ["burger", "pasta"],
     "Thursday": ["pizza", "burger", "pasta"],
     "Friday": ["pizza", "burger"],
-    "Saturday": None,
-    "Sunday": None,
+    "Saturday": ["nothing. We are closed today."],
+    "Sunday": ["nothing. We are closed today."]
 }
 prices = {
     "pizza": 10,
@@ -52,7 +51,6 @@ def get_chatbot_response(message):
         return f"Our menu includes: {', '.join(foods)}"
     if 'menu' or ('menu' and 'today') in message.lower():
         return f"We have {', '.join(menu[days[today.weekday()]])} today."
-    
     if 'hours' in message.lower():
         return 'We are open from 9 AM to 9 PM every day.'
     else:

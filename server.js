@@ -11,7 +11,7 @@ const io = socketIo(server);
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'public'));
 });
 
 io.on('connection', (socket) => {

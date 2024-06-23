@@ -10,7 +10,7 @@ var socket = io();
             messages.appendChild(item);
             messages.scrollTop = messages.scrollHeight;
         }
-
+ 
         socket.on('chatbot message', function(msg) {
             addMessage(msg, 'chatbot');
         });

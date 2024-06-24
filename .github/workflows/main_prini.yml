@@ -42,7 +42,9 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    
+    permissions:
+      id-token: write #This is required for requesting the JWT
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
@@ -52,6 +54,13 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
       
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_49CE0CE7106D4A70939BBD191A8761B2 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_187F8572CD104E78991021693AA90E2C }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_14F12E6D760F4A03869EC4F37B790293 }}
+
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
@@ -59,4 +68,4 @@ jobs:
           app-name: 'prini'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E5496719D484417A95C0BC68397DFACD }}
+          

@@ -1,57 +1,63 @@
-import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
+var socket = io();
+        var messages = document.getElementById('messages');
+        var input = document.getElementById('input');
+        var sendButton = document.getElementById('send');
 
-document.addEventListener("DOMContentLoaded", () => {
-  const socket = io(); // Connect to the current host
 
-  const btn = document.querySelector(".conserve");
-  const input = document.getElementById("user-input");
-  const chatBox = document.getElementById("chat-box");
+        function addMessage(message, sender) {
+            var item = document.createElement('div');
+            item.style.marginBottom = "10px";
+            item.textContent = message;
+            item.style.backgroundColor = "#05cee9";
+            item.style.color ="black";
+            item.style.padding ="5px";
+            item.style.borderRadius = "5px";
+            item.style.marginLeft = "345px";
+            item.style.textAlign ="right";
+            item.style.fontSize = "15px"
+            item.classList.add("message",sender);
+            messages.appendChild(item);
+            
+            
+            messages.scrollTop = messages.scrollHeight;
+            
+        }
+        function addMessage1(message, sender) {
+            var item2 = document.createElement('div');
+            
+            item2.textContent = message;
+            item2.style.backgroundColor = "#584fd9";
+            item2.style.marginBottom = "10px";
+            item2.style.width = "350px";
+            item2.style.padding ="5px";
+            item2.style.borderRadius = "5px";
+            item2.classList.add("message",sender);
+            messages.appendChild(item2);
+            messages.scrollTop = messages.scrollHeight;
+            
+        }
 
-  const sendMessage = () => {
-    const questionUSER = input.value.trim();
-    if (questionUSER !== "") {
-      // Emit user's question to the server
-      socket.emit("request", questionUSER);
 
-      // Display user's question in the chat box
-      const questionDiv = document.createElement("div");
-      questionDiv.classList.add("message", "user");
-      questionDiv.textContent = questionUSER;
-      chatBox.appendChild(questionDiv);
+     
 
-      // Clear the input field
-      input.value = "";
-      input.style.height = "40px"; // Reset height after sending message
+        
+ 
+        socket.on('chatbot message', function(msg) {
+            addMessage1(msg, 'chatbot');
+        
+        });
 
-      // Scroll to the bottom of the chat box
-      chatBox.scrollTop = chatBox.scrollHeight;
-    }
-  };
+        sendButton.onclick = function() {
+            var msg = input.value ;
+            if (msg) {
+                addMessage(msg, 'user');
+                socket.emit('user message', msg);
+                input.value = '';
+            }
+        };
 
-  btn.addEventListener("click", sendMessage);
-
-  socket.on("response", (data) => {
-    // Display server's response in the chat box
-    const answerDiv = document.createElement("div");
-    answerDiv.classList.add("message", "bot");
-    answerDiv.textContent = data;
-    chatBox.appendChild(answerDiv);
-
-    // Scroll to the bottom of the chat box
-    chatBox.scrollTop = chatBox.scrollHeight;
-  });
-
-  // Adjust the height of the textarea as the user types
-  input.addEventListener("input", function() {
-    this.style.height = "auto";
-    this.style.height = (this.scrollHeight) + "px";
-  });
-
-  // Handle enter and shift+enter for sending message and new line
-  input.addEventListener("keydown", function(e) {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
-  });
-});
+        input.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                sendButton.click();
+            }
+        });

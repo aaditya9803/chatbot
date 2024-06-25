@@ -1,16 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Prini Chatbot</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prini Chatbot</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+  
+</head>
 <body>
-    <div class="chat-container">
-        <div id="messages" class="messages"></div>
-        <input id="input" autocomplete="off" placeholder="Type a message..."/><button id="send">Send</button>
+  <div class="main-div">
+    <div class="chat-container" id="chat-container">  
+      <div class="top-part">
+        <div class="prini-details">
+          <img src="./images/3.jpg" alt="">
+          <div class="prini-text">
+            <h3>Prini</h3>
+            <p>Assistant <span>(online)</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="chat-box" id="chat-box"> 
+        <!-- Messages will be appended here dynamically -->
+      </div>
+      <div class="message-container">
+        <textarea id="user-input" placeholder="Type your message..."></textarea>
+        <button class="conserve"><i class="bx bx-send"></i></button>
+      </div>
     </div>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="main.js"></script>
+
+
+  <script type ="module" src="main.js"></script>  
+  </div>
+
+  
+
 </body>
 </html>

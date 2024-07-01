@@ -1,162 +1,134 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "poppins";
-  color: #fdfdfd;
+  font-family: "Poppins", sans-serif;
 }
 
-
-
-body{
+body {
   background-image: url('./images/background.jpg');
   background-size: cover; 
   background-position: center; 
   background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #fdfdfd;
 }
-
 
 .main-div {
   display: flex;
-  justify-content: flex-start; /* Align items to the start (left) */
+  justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  padding-left: 30px; /* Optional: adds some spacing from the left edge */
+  width: 100%;
 }
+
+.chat-container {
+  width: 100%;
+  max-width: 700px;
+  margin: 20px;
+  padding: 20px;
+  background-color: #a6c2c6;
+  border: 1px solid #201b1b;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  height: 700px;
+}
+
 .top-part {
-  height: 100px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
   background: #584fd9;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.prini-details {
   display: flex;
-  justify-content: space-around;
   align-items: center;
 }
 
-.top-part .prini-details{
-  display: flex;
-  align-items: center;
-}
-
-.top-part img {
+.prini-details img {
   height: 70px;
   border: 2px solid #fff;
   border-radius: 50%;
-  background: #fff;
+  margin-right: 10px;
 }
 
-.chat-container .top-part .prini-details img{
-  height: 70px;
-  border: 2px solid #fff;
-  border-radius: 50%;
-  background: #fff;
+.prini-text h3 {
+  font-size: 18px;
 }
 
-.top-part .prini-text{
-  margin-left: 10px;
-}
-
-.prini-text h3{
-  font-size: 15px;
-}
-
-.prini-text h4{
+.prini-text p {
   font-size: 14px;
+  margin-top: 5px;
 }
 
-.prini-text span{
+.online-status {
   color: #0f0;
 }
 
-
-
-
-#messages {
-  align-self:center;
-  font-weight:normal;
-  background-color: white; /* Bot's message color */
+.messages {
+  display: inline-block;
+  flex-grow: 1;
+  overflow-y: auto;
+  background-color: white;
   color: #0f0f20;
-  padding: 5px 10px; /* Decrease padding around the text */
-  border-radius: 5px; /* Add rounded corners */
-  margin: 10px 0; /* Space between messages */
-  width: 660px; /* Remove max-width to allow full text in one line */
-  white-space: pre-line; /* Prevent text wrapping */
-  word-wrap: break-word; /* Ensure long words break to the next line */
-  display: inline-block; /* Ensure the width fits the content */
-  margin-right:100px;
-  height: 560px;
-  max-height: 565px;
-  overflow: hidden;
-  overflow-y: scroll;
-  
-  
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
 }
 
+.input-area {
+  display: flex;
+}
 
 #input {
-  align-self: flex-end;
-  width: 600px;
-  background-color: #05cee9;
-  position: absolute;
-  left: 32px;
-  height: 50px;
-  margin-bottom: 85px;
-  font-size: 20px;
-  
-
-}
-#send {
-  width: 95px;
-  height: 50px;
-  align-self: flex-end;
-  position: absolute;
-  left: 635px;
-  margin-bottom: 85px;
-  font-size: medium;
-  background-color: #05cee9;
-  cursor: pointer;
-  left
-}
-
-
-.question {
-  margin: 5px;
-  width: 200px;
+  flex-grow: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #05cee9;
   border-radius: 5px;
-  align-self: flex-end;
-  margin-left: 80px;
-  text-align: right;
-  float: right;
-  font-size: 14px;
-  color: #555;
-  background: rgba(0, 0, 0, .1);
+  margin-right: 10px;
+  resize: none; /* Disable manual resizing */
+  overflow: hidden;
+  max-height: 150px; /* Limit the max height */
 }
 
-.conserve {
+#send {
   padding: 10px 20px;
+  font-size: 16px;
   background-color: #05cee9;
   color: #0f0f20;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-left: 10px;
 }
 
-.chat-container {
-  max-width: 700px; /* Increased width */
-  width: 100%; /* Ensures responsiveness */
-  margin: 30px 0; /* Only top and bottom margins */
-  padding: 20px;
-  border: 1px solid #201b1b;
-  border-radius: 7px;
-  background-color: #a6c2c6;
-  height: 700px;
-  
-
+.message {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  word-wrap: break-word;
+  font-size: 15px;
+  max-width: fit-content;
 }
 
-
-
-.conserve i{
-  color: #0f0f20;
-  font-size: 20px;
+.user {
+  background-color: #05cee9;
+  color: black;
+  text-align: right;
+  align-self: flex-end;
+  margin-left: auto;
 }
 
+.chatbot {
+  background-color: #584fd9;
+  color: white;
+  text-align: left;
+  align-self: flex-start;
+  margin-right: auto;
+}

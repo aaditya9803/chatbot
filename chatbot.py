@@ -45,26 +45,26 @@ def get_chatbot_response(message):
             return f'{food} costs {prices[food]} dollars.'
 
     if "hello" in message or "hi" in message or "hey" in message or "today" in message:
-        return f"Hi,\n Today we have {', '.join(menu[days[today.weekday()]])}"
+        return f"Hi, Today we have <ul><li>&#8226{'</li><li>&#8226;'.join(menu[days[today.weekday()]])}</li></ul>"
     elif "tomorrow" in message:
         if today.weekday() != 6:
             tomorrow = today.weekday() + 1
         else:
             tomorrow = 0
-        return f"On {days[tomorrow]}s we have {', '.join(menu[days[tomorrow]])}"
+        return f"On {days[tomorrow]}s we have <ul><li>&#8226{'</li><li>&#8226;'.join(menu[days[tomorrow]])}</li></ul>"
     elif "yesterday" in message:
         if today.weekday() != 0:
             yesterday = today.weekday() - 1
         else:
             yesterday = 6
-        return f"On {days[yesterday]}s we have {', '.join(menu[days[yesterday]])}"
+        return f"On {days[yesterday]}s we have <ul><li>&#8226{'</li><li>&#8226;'.join(menu[days[yesterday]])}</li></ul>"
 
     elif 'menu' in message.lower() and ('all' or 'whole') in message.lower():
-        return f"Our menu includes: {', '.join(foods)}"
+        return f"Our menu includes: <ul><li>&#8226{'</li><li>&#8226;'.join(list(prices.keys()))}</li></ul>"
     elif 'menu' in message.lower() or ('menu' and 'today') in message.lower():
-        return f"Today we have {', '.join(menu[days[today.weekday()]])}"
+        return f"Today we have <ul><li>&#8226{'</li><li>&#8226;'.join(menu[days[today.weekday()]])}</li></ul>"
     elif 'hours' in message.lower():
-        return 'We are open from 9 AM to 9 PM every day.'
+        return 'We are open from 7:30 AM to 3:00 PM on working days.'
     else:
         return 'I am sorry, I didn\'t understand that.'
 

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+
   <title>Prini Chatbot</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -9,12 +10,16 @@
   <div class="main-div">
     <div class="chat-container" id="chat-container">
       <div class="top-part"> 
-        <div class="prini-details"> 
-          <img src="./images/3.avif" alt="Prini">
+        <div class="prini-details">
+          <img id = "icon" src="./images/3.avif" alt="Prini">
+          <img id="device" src="./images/device.png" alt ="device">
+          <img id="thd-logo" src="./images/thd.jpeg" alt="logo">
           <div class="prini-text">
             <h3>Prini</h3>
             <p>Assistant <span class="online-status">(online)</span></p>
+            <div class="typing-indicator" id="typingIndicator"></div>
           </div>
+          
         </div>
       </div>
       <div id="messages" class="messages"></div>

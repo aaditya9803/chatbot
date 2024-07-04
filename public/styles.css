@@ -2,8 +2,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
 }
+
+
 
 body {
   background-image: url('./images/background.jpg');
@@ -39,9 +40,10 @@ body {
 
 .top-part {
   display: flex;
-  align-items: center;
+  align-items:center;
   padding: 10px;
   background: #584fd9;
+  background-size: cover;
   border-radius: 5px;
   margin-bottom: 20px;
 }
@@ -49,6 +51,7 @@ body {
 .prini-details {
   display: flex;
   align-items: center;
+  margin-left: 220px;
 }
 
 .prini-details img {
@@ -57,6 +60,11 @@ body {
   border-radius: 50%;
   margin-right: 10px;
 }
+
+
+#device, #thd-logo{
+  display: none; /* we dont want the device and thd icons in the web view*/
+  }
 
 .prini-text h3 {
   font-size: 18px;
@@ -86,6 +94,8 @@ body {
   display: flex;
 }
 
+
+
 #input {
   flex-grow: 1;
   padding: 10px;
@@ -93,10 +103,12 @@ body {
   border: 1px solid #05cee9;
   border-radius: 5px;
   margin-right: 10px;
-  resize: none; /* Disable manual resizing */
+  resize: none; /* No resizing */
   overflow: hidden;
-  max-height: 150px; /* Limit the max height */
+  max-height: 150px; /* Limit the max height with this !! */
+  font-family: "Lucida Console", "Courier New", monospace;
 }
+
 
 #send {
   padding: 10px 20px;
@@ -109,26 +121,99 @@ body {
 }
 
 .message {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   padding: 10px;
   border-radius: 5px;
   word-wrap: break-word;
   font-size: 15px;
   max-width: fit-content;
+  font-family: "Lucida Console", "Courier New", monospace;
+  
+}
+.typing-indicator {
+  
+  font-style: italic;
+  color: #1bd143;
+  font-size: 20px;
+  
 }
 
+
+/* messages of the user*/
 .user {
+  display: flex;
+  border-radius: 15px;
   background-color: #05cee9;
   color: black;
   text-align: right;
   align-self: flex-end;
   margin-left: auto;
+  align-items: center;
+  padding: 10px;
+  box-shadow: #00000040 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+
+  
 }
 
 .chatbot {
-  background-color: #584fd9;
-  color: white;
-  text-align: left;
-  align-self: flex-start;
-  margin-right: auto;
+  display: flex;
+  box-shadow: #00000040 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  background-color: #f0f0f0; /* Very light pastel blue */  
+  color: black;
+  border-radius: 15px;
+  align-items:center;
+  padding: 10px;
+  
 }
+
+
+.message-icon {
+  width: 50px; 
+  height: 50px; 
+  margin-right: 10px; 
+  border-radius: 25px;
+}
+
+
+.user-icon {
+  width: 30px;
+  height: 30px; 
+  margin-right: 10px; 
+  border-radius: 15px;
+}
+
+
+
+/* this code will be applied only when the chatbot is opened in mobile devices!!! */
+@media only screen and (max-width: 480px) {
+  body{
+    height: 2000px;
+  }
+  .main-div{
+    zoom: 1.7;
+  }
+
+  .prini-details {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    margin-right: 20px;
+  }
+  
+  
+  .prini-text{
+    margin-left: 40px;
+  }
+
+  #device{
+    display:flex;
+    align-items: flex-start;
+    
+    }
+  #thd-logo{
+    display: flex;
+    align-items: flex-end;
+
+  }
+  }
+

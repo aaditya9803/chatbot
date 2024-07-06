@@ -14,24 +14,34 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+let userStates = {};
+
 io.on('connection', (socket) => {
     console.log('a user connected');
 
-    socket.emit('chatbot message', 'Welcome to our restaurant! How can I assist you today?');
+    userStates[socket.id] = { lastMessage: null };
+
+    socket.emit('chatbot message', 'Welcome to our DIT canteen <br> I\'m PRINI the bot <br>');
 
     socket.on('user message', (msg) => {
         console.log('message from user: ' + msg);
-        exec(`python3 chatbot.py "${msg}"`, (error, stdout, stderr) => {
+
+        const userState = JSON.stringify(userStates[socket.id]);
+        exec(`python3 chatbot.py "${msg.replace(/"/g, '\\"')}" "${userState.replace(/"/g, '\\"')}"`, (error, stdout, stderr) => {
             if (error) {
                 console.error(`exec error: ${error}`);
                 return;
             }
-            socket.emit('chatbot message', stdout.trim());
+
+            const response = JSON.parse(stdout.trim());
+            userStates[socket.id] = response.state;
+            socket.emit('chatbot message', response.message);
         });
     });
 
     socket.on('disconnect', () => {
         console.log('user disconnected');
+        delete userStates[socket.id];
     });
 });
 

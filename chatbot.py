@@ -56,8 +56,8 @@ def get_chatbot_response(message, state):
 
     elif state['lastMessage'] == 'menu_today':
         if 'yes,' in message or 'yeah' in message or 'sure'in message or 'ok'in message or 'okay'in message or 'today' in message:
-            response['message'] = f"Hi, Today we have <ol><li>{'</li><li>'.join(menu[days[today.weekday()]])}</li></ol>"
-            response['state'] = {'lastMessage': 'food_list'}
+            response['message'] = f"Hi, Today we have <ol><li>{'</li><li>'.join(menu[days[today.weekday()]])}</li></ol> <br> Which food would you like to know about or order?"
+            response['state'] = {'lastMessage': 'know_about'}
         elif 'no,' in message or 'nope'in message:
             response['message'] = "Say 'hi' to start again."
             response['state'] = {'lastMessage': None}
@@ -71,15 +71,15 @@ def get_chatbot_response(message, state):
             response['message'] = "I could not understand you. <br> Say 'hi' to start again."
             response['state'] = {'lastMessage': None}
 
-    elif "tomorrow" in message:
-        response['state'] = {'lastMessage': 'menu_tomorrow'}
+    # elif "tomorrow" in message:
+    #     response['state'] = {'lastMessage': 'menu_tomorrow'}
 
-    elif state['lastMessage'] == 'menu_tomorrow':
+    elif state['lastMessage'] == 'menu_tomorrow' or 'tomorrow' in message:
         if today.weekday() != 6:
             tomorrow = today.weekday() + 1
         else:
             tomorrow = 0
-
+        # response['state'] = {'lastMessage': 'menu_tomorrow'}
         if 'yes,' in message or 'yeah' in message or 'right'in message:
             response['message'] = f"On {days[tomorrow]}s we have <ol><li>{'</li><li>'.join(menu[days[tomorrow]])}</li></ol>"
             response['state'] = {'lastMessage': 'menu_tomorrow'}
@@ -92,15 +92,15 @@ def get_chatbot_response(message, state):
             response['state'] = {'lastMessage': None}
 
 
-    elif "yesterday" in message:
-        response['state'] = {'lastMessage': 'menu_yesterday'}
+    # elif "yesterday" in message:
+    #     response['state'] = {'lastMessage': 'menu_yesterday'}
 
-    elif state['lastMessage'] == 'menu_yesterday':
+    elif state['lastMessage'] == 'menu_yesterday' or 'yesterday' in message:
         if today.weekday() != 0:
             yesterday = today.weekday() - 1
         else:
             yesterday = 6
-
+        # response['state'] = {'lastMessage': 'menu_yesterday'}
         if 'yes,' in message or 'yeah' in message or 'right'in message:
             response['message'] = f"On {days[yesterday]}s we have <ol><li>{'</li><li>'.join(menu[days[yesterday]])}</li></ol>"
             response['state'] = {'lastMessage': 'menu_yesterday'} 
@@ -112,33 +112,12 @@ def get_chatbot_response(message, state):
             response['message'] = "Say 'hi' to start again."
             response['state'] = {'lastMessage': None}
 
-
-        # response['message'] = f"On {days[yesterday]}s we have <ol><li>{'</li><li>'.join(menu[days[yesterday]])}</li></ol>"
-        # response['state'] = {'lastMessage': 'menu_yesterday'} 
-
-    # elif state['lastMessage'] == 'food_list':
-    #     if message in prices.keys():
-    #         response['message'] = f'{message} costs {", ".join(prices[message])} euros.'
-    #         response['state'] = {'lastMessage': 'price'}
-    #     else:
-    #         response['message'] = "Sorry, I don't have the price for that. Would you like to know the menu for tomorrow?"
-    #         response['state'] = {'lastMessage': 'menu_tomorrow'}
+    elif state['lastMessage'] == 'know_about':
+        response['message'] = "Nothing I guess"
+        response['state'] = {'lastMessage': None}
+        
 
 
-
-
-    # elif "tomorrow" in message:
-    #     if today.weekday() != 6:
-    #         tomorrow = today.weekday() + 1
-    #     else:
-    #         tomorrow = 0
-    #     return f"On {days[tomorrow]}s we have <ol><li>{'</li><li>'.join(menu[days[tomorrow]])}</li></ol>"
-    # elif "yesterday" in message:
-    #     if today.weekday() != 0:
-    #         yesterday = today.weekday() - 1
-    #     else:
-    #         yesterday = 6
-    #     return f"On {days[yesterday]}s we have <ol><li>{'</li><li>'.join(menu[days[yesterday]])}</li></ol>"
 
     elif 'menu' in message and ('all' or 'whole') in message:
         return f"Our menu includes: <ol><li>{'</li><li>'.join(list(prices.keys()))}</li></ol>"

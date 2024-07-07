@@ -198,7 +198,8 @@ body {
     height: 2000px;
   }
   .main-div{
-    zoom: 1.7;
+    transform: scale(1.7);
+    transform-origin: top left;
   }
 
   .prini-details {
@@ -223,5 +224,6 @@ body {
     align-items: flex-end;
 
   }
+  
   }
 

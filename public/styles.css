@@ -195,10 +195,10 @@ body {
 /* this code will be applied only when the chatbot is opened in mobile devices!!! */
 @media only screen and (max-width: 480px) {
   body{
-    height: 1500px;
+    height: 1300px;
   }
   .main-div{
-    transform: scale(1.2);
+    transform: scale(1.0);
     transform-origin: top left;
   }
 

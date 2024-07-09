@@ -37,9 +37,9 @@ prices = {
 def get_chatbot_response(message, state):
     message = message.lower()
     if message == "yes":
-        message = "yes,"
+        message = "yes_"
     if message == "no":
-        message = "no,"
+        message = "no_"
     response = {}
     # for day in days:
     #     if day.lower() in message:
@@ -55,10 +55,10 @@ def get_chatbot_response(message, state):
         response['state'] = {'lastMessage': 'menu_today'}
 
     elif state['lastMessage'] == 'menu_today':
-        if 'yes,' in message or 'yeah' in message or 'sure'in message or 'ok'in message or 'okay'in message or 'today' in message:
+        if 'yes_' in message or 'yeah' in message or 'sure'in message or 'ok'in message or 'okay'in message or 'today' in message:
             response['message'] = f"Hi, Today we have <ol><li>{'</li><li>'.join(menu[days[today.weekday()]])}</li></ol> <br> Which food would you like to know about or order?"
             response['state'] = {'lastMessage': 'know_about'}
-        elif 'no,' in message or 'nope'in message:
+        elif 'no_' in message or 'nope'in message:
             response['message'] = "Say 'hi' to start again."
             response['state'] = {'lastMessage': None}
         elif 'tomorrow' in message or ('tomorrow' in message and 'no' in message):
@@ -80,11 +80,11 @@ def get_chatbot_response(message, state):
         else:
             tomorrow = 0
         # response['state'] = {'lastMessage': 'menu_tomorrow'}
-        if 'yes,' in message or 'yeah' in message or 'right'in message:
+        if 'yes_' in message or 'yeah' in message or 'right'in message:
             response['message'] = f"On {days[tomorrow]}s we have <ol><li>{'</li><li>'.join(menu[days[tomorrow]])}</li></ol>"
             response['state'] = {'lastMessage': 'menu_tomorrow'}
         
-        elif 'order' in message or 'order food' in message or 'pack'in message:
+        elif 'order' in message or 'order food' in message or 'pack'in message or '1'in message or '2'in message or '3' in message or '4' in message or '5' in message:
             response['message'] = "You can't order food for tomorrow. <br> Please comeback tomorrow to order <br> Thank you!"
             response['state'] = {'lastMessage': None}
         else:
@@ -101,11 +101,11 @@ def get_chatbot_response(message, state):
         else:
             yesterday = 6
         # response['state'] = {'lastMessage': 'menu_yesterday'}
-        if 'yes,' in message or 'yeah' in message or 'right'in message:
+        if 'yes_' in message or 'yeah' in message or 'right'in message:
             response['message'] = f"On {days[yesterday]}s we have <ol><li>{'</li><li>'.join(menu[days[yesterday]])}</li></ol>"
             response['state'] = {'lastMessage': 'menu_yesterday'} 
         
-        elif 'order' in message or 'order food' in message or 'pack'in message:
+        elif 'order' in message or 'order food' in message or 'pack'in message or '1'in message or '2'in message or '3' in message or '4' in message or '5' in message:
             response['message'] = "You can't order food for Yesterday. <br> But Hey!! You can order for today. <br> Would you like to know the menu for today?"
             response['state'] = {'lastMessage': 'menu_today'}
         else:
@@ -113,8 +113,18 @@ def get_chatbot_response(message, state):
             response['state'] = {'lastMessage': None}
 
     elif state['lastMessage'] == 'know_about':
-        response['message'] = "Nothing I guess"
-        response['state'] = {'lastMessage': None}
+        for i in range(0, len(menu[days[today.weekday()]])):
+            if f"{i+1}" in message:
+                response['message'] = f"{menu[days[today.weekday()]][i]} costs:<ul><li>{prices[menu[days[today.weekday()]][i]][0]} euros for students,</li><li> {prices[menu[days[today.weekday()]][i]][1]} euros for employees </li><li> {prices[menu[days[today.weekday()]][i]][2]} euros for staffs.</ul>"
+                response['state'] = {'lastMessage': 'know_about'}
+            else:
+                response['message'] = "Say 'hi' to start again."
+                response['state'] = {'lastMessage': None}
+
+
+
+
+
         
 
 

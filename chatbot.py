@@ -3,8 +3,7 @@ from datetime import datetime
 import json
 
 today = datetime.today()
-# greet1 = ["hello", "hi", "Hey"]
-# greet2 = "What would you like to have? We have "
+
 days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 menu = {
     "Monday": ["Pasta Saloniki", "Cauliflower crispy medallion with tomato dip and carrot vegetables", "Colorful vegetable salad", "Mixed salad","Peach curd"],
@@ -44,15 +43,6 @@ def get_chatbot_response(message, state):
         message = "no_"
     response = {}
     available_days = []
-
-    # for day in days:
-    #     if day.lower() in message:
-    #         response['message'] = f"On {day}s we have <ol><li>{'</li><li>'.join(menu[day])}</li></ol>"
-    #         response['state'] = {'lastMessage': None}
-
-    # for food in foods:
-    #     if food in message and ("price" or "cost" in message):
-    #         return f'{food} costs {prices[food]} dollars.'
         
 
     if 'hi' in message or 'hello' in message or 'hey' in message or 'today' in message or 'start' in message:
@@ -85,13 +75,14 @@ def get_chatbot_response(message, state):
                     available_days.append(day)
                     response['message'] = f"The food is available on <ul><li>{'</li><li>'.join(available_days)}s</li><br>It costs:<ul><li>{prices[food_mentioned][0]} euros for students,</li><li>{prices[food_mentioned][1]} euros for staff,</li><li>{prices[food_mentioned][2]} euros for guests.</li></ul>"
                     response['state'] = {'lastMessage': None}
+
         elif 'hours' in message:
             response['message'] = f"We are open from 7:30 AM to 3:00 PM on working days."
-            response['state'] = {'lastMessage': 'None'}
+            response['state'] = {'lastMessage': None}
         
-        elif 'menu' in message and ('all' or 'whole') in message:
+        elif 'menu' in message and ('all' in message or 'whole'in message):
             response['message'] = f"Our menu includes: <ol><li>{'</li><li>'.join(list(prices.keys()))}</li></ol>"
-            response['state'] = {'lastMessage': 'None'}
+            response['state'] = {'lastMessage': None}
     
         else:
             response['message'] = "I could not understand you. <br> Say 'hi' to start again."
@@ -170,7 +161,7 @@ def get_chatbot_response(message, state):
 
 
 
-    elif 'thank you' in message or 'thankyou' in message:
+    elif 'thank you' in message or 'thankyou' in message or 'thanks' in message:
         response['message'] = "You are welcome! Have a nice day! <br> Bye!"
         response['state'] = {'lastMessage': None}
     else:

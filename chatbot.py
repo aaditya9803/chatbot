@@ -42,8 +42,7 @@ def get_chatbot_response(message, state):
     if message == "no":
         message = "no_"
     response = {}
-    available_days = []
-        
+    available_days = []   
 
     if 'hi' in message or 'hello' in message or 'hey' in message or 'today' in message or 'start' in message:
         response['message'] = "Hi, Would you like to know the menu for today?"
@@ -127,8 +126,10 @@ def get_chatbot_response(message, state):
 
     elif state['lastMessage'] == 'know_about':
         valid_selection = False
+        today_menu = menu[days[today.weekday()]]
         for i in range(len(menu[days[today.weekday()]])):
-            if f"{i+1}" in message:
+            food_name = today_menu[i]
+            if f"{i+1}" in message or food_name.lower() in message:
                 response['message'] = f"{menu[days[today.weekday()]][i]} costs:<ul><li>{prices[menu[days[today.weekday()]][i]][0]} euros for students,</li><li>{prices[menu[days[today.weekday()]][i]][1]} euros for staff,</li><li>{prices[menu[days[today.weekday()]][i]][2]} euros for guests.</li></ul><br> So, what type of customer are you?"
                 response['state'] = {'lastMessage': 'user_type'}
                 valid_selection = True

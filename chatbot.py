@@ -83,7 +83,9 @@ def get_chatbot_response(message, state):
         elif 'menu' in message and ('all' in message or 'whole'in message):
             response['message'] = f"Our menu includes: <ol><li>{'</li><li>'.join(list(prices.keys()))}</li></ol>"
             response['state'] = {'lastMessage': None}
-    
+        elif ("1" in message or "nothing" in message) and today.weekday() == 5 or today.weekday() == 6:
+            response['message'] = "Hey, you can't order nothing!<br> Say 'hi' to start again."
+            response['state'] = {'lastMessage': None}
         else:
             response['message'] = "I could not understand you. <br> Say 'hi' to start again."
             response['state'] = {'lastMessage': None}

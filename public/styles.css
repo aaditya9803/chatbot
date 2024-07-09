@@ -195,11 +195,9 @@ body {
 /* this code will be applied only when the chatbot is opened in mobile devices!!! */
 @media only screen and (max-width: 480px) {
   body{
-    height: 2000px;
+    height: 1400px;
   }
-  .main-div{
-    zoom: 1.7;
-  }
+
 
   .prini-details {
     display: flex;
@@ -210,7 +208,8 @@ body {
   
   
   .prini-text{
-    margin-left: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 
   #device{
@@ -223,5 +222,6 @@ body {
     align-items: flex-end;
 
   }
+  
   }
 

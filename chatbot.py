@@ -88,6 +88,10 @@ def get_chatbot_response(message, state):
         elif 'hours' in message:
             response['message'] = f"We are open from 7:30 AM to 3:00 PM on working days."
             response['state'] = {'lastMessage': 'None'}
+        
+        elif 'menu' in message and ('all' or 'whole') in message:
+            response['message'] = f"Our menu includes: <ol><li>{'</li><li>'.join(list(prices.keys()))}</li></ol>"
+            response['state'] = {'lastMessage': 'None'}
     
         else:
             response['message'] = "I could not understand you. <br> Say 'hi' to start again."

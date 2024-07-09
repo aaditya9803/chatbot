@@ -34,6 +34,7 @@ prices = {
     "Baked fish patties with potato salad": ["3,10", "3,90", "4,60"],
     "Vanillequark": ["0,90", "1,10", "1,60"],
 }
+foods = list(prices.keys())
 
 def get_chatbot_response(message, state):
     message = message.lower()
@@ -42,6 +43,7 @@ def get_chatbot_response(message, state):
     if message == "no":
         message = "no_"
     response = {}
+    available_days = []
 
     # for day in days:
     #     if day.lower() in message:
@@ -76,7 +78,17 @@ def get_chatbot_response(message, state):
             response['message'] = f"On {day_mentioned}s we have <ol><li>{'</li><li>'.join(menu[day_mentioned])}</li></ol>"
             response['state'] = {'lastMessage': None}
         
-        
+        elif any(food.lower() in message for food in foods):
+            food_mentioned = next(food for food in foods if food.lower() in message)
+            for day in days:
+                if food_mentioned in menu[day]:
+                    available_days.append(day)
+                    response['message'] = f"The food is available on <ul><li>{'</li><li>'.join(available_days)}s</li><br>It costs:<ul><li>{prices[food_mentioned][0]} euros for students,</li><li>{prices[food_mentioned][1]} euros for staff,</li><li>{prices[food_mentioned][2]} euros for guests.</li></ul>"
+                    response['state'] = {'lastMessage': None}
+        elif 'hours' in message:
+            response['message'] = f"We are open from 7:30 AM to 3:00 PM on working days."
+            response['state'] = {'lastMessage': 'None'}
+    
         else:
             response['message'] = "I could not understand you. <br> Say 'hi' to start again."
             response['state'] = {'lastMessage': None}
@@ -153,18 +165,10 @@ def get_chatbot_response(message, state):
             response['state'] = {'lastMessage': None}
 
 
-        
 
-
-
-    elif 'menu' in message and ('all' or 'whole') in message:
-        return f"Our menu includes: <ol><li>{'</li><li>'.join(list(prices.keys()))}</li></ol>"
-    elif 'menu' in message or ('menu' and 'today') in message:
-        return f"Today we have <ol><li>{'</li><li>'.join(menu[days[today.weekday()]])}</li></ol>"
-    elif 'hours' in message:
-        return 'We are open from 7:30 AM to 3:00 PM on working days.'
     elif 'thank you' in message or 'thankyou' in message:
-        return 'You are welcome! Have a nice day! <br> Bye!'
+        response['message'] = "You are welcome! Have a nice day! <br> Bye!"
+        response['state'] = {'lastMessage': None}
     else:
         response['message'] = "Please say 'hi' to start again."
         response['state'] = {'lastMessage': None}

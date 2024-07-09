@@ -15,6 +15,7 @@ menu = {
     "Saturday": ["nothing. We are closed."],
     "Sunday": ["nothing. We are closed."]
 }
+# Students / Staff / Guests
 prices = {
     "Pasta Saloniki": ["2,80", "3,40", "4,40"],
     "Cauliflower crispy medallion with tomato dip and carrot vegetables": ["2,80", "3,40", "4,40"],
@@ -71,15 +72,12 @@ def get_chatbot_response(message, state):
             response['message'] = "I could not understand you. <br> Say 'hi' to start again."
             response['state'] = {'lastMessage': None}
 
-    # elif "tomorrow" in message:
-    #     response['state'] = {'lastMessage': 'menu_tomorrow'}
 
     elif state['lastMessage'] == 'menu_tomorrow' or 'tomorrow' in message:
         if today.weekday() != 6:
             tomorrow = today.weekday() + 1
         else:
             tomorrow = 0
-        # response['state'] = {'lastMessage': 'menu_tomorrow'}
         if 'yes_' in message or 'yeah' in message or 'right'in message:
             response['message'] = f"On {days[tomorrow]}s we have <ol><li>{'</li><li>'.join(menu[days[tomorrow]])}</li></ol>"
             response['state'] = {'lastMessage': 'menu_tomorrow'}
@@ -92,15 +90,12 @@ def get_chatbot_response(message, state):
             response['state'] = {'lastMessage': None}
 
 
-    # elif "yesterday" in message:
-    #     response['state'] = {'lastMessage': 'menu_yesterday'}
 
     elif state['lastMessage'] == 'menu_yesterday' or 'yesterday' in message:
         if today.weekday() != 0:
             yesterday = today.weekday() - 1
         else:
             yesterday = 6
-        # response['state'] = {'lastMessage': 'menu_yesterday'}
         if 'yes_' in message or 'yeah' in message or 'right'in message:
             response['message'] = f"On {days[yesterday]}s we have <ol><li>{'</li><li>'.join(menu[days[yesterday]])}</li></ol>"
             response['state'] = {'lastMessage': 'menu_yesterday'} 
@@ -115,14 +110,26 @@ def get_chatbot_response(message, state):
     elif state['lastMessage'] == 'know_about':
         for i in range(0, len(menu[days[today.weekday()]])):
             if f"{i+1}" in message:
-                response['message'] = f"{menu[days[today.weekday()]][i]} costs:<ul><li>{prices[menu[days[today.weekday()]][i]][0]} euros for students,</li><li> {prices[menu[days[today.weekday()]][i]][1]} euros for employees </li><li> {prices[menu[days[today.weekday()]][i]][2]} euros for staffs.</ul>"
-                response['state'] = {'lastMessage': 'know_about'}
+                response['message'] = f"{menu[days[today.weekday()]][i]} costs:<ul><li>{prices[menu[days[today.weekday()]][i]][0]} euros for students,</li><li> {prices[menu[days[today.weekday()]][i]][1]} euros for staffs </li><li> {prices[menu[days[today.weekday()]][i]][2]} euros for guests.</ul> <br> So, What type of customer are you?"
+                response['state'] = {'lastMessage': 'user_type'}
             else:
                 response['message'] = "Say 'hi' to start again."
                 response['state'] = {'lastMessage': None}
 
 
+    elif state['lastMessage'] == 'user_type':
+        for i in range(0, len(menu[days[today.weekday()]])):
+            if 'student' in message or '1' in message:
+                response['message'] = f"It will be {prices[menu[days[today.weekday()]][i]][0]} euro. <br> Do you confirm your Order?"
+                response['state'] = {'lastMessage': 'confirm_order'}
 
+    elif state['lastMessage'] == 'confirm_order':
+        if 'yes_' in message:
+            response['message'] = "Thank you for ordering.<br> Please pay at the counter. <br> Have a nice day!"
+            response['state'] = {'lastMessage': None}
+        elif 'no_' in message:
+            response['message'] = "Your order has been canceled. <br> Say 'hi' to start again."
+            response['state'] = {'lastMessage': None}
 
 
         

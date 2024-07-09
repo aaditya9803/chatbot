@@ -85,6 +85,21 @@ def get_chatbot_response(message, state):
         elif ("1" in message or "nothing" in message) and today.weekday() == 5 or today.weekday() == 6:
             response['message'] = "Hey, you can't order nothing!<br> Say 'hi' to start again."
             response['state'] = {'lastMessage': None}
+        elif 'thank you' in message or 'thankyou' in message or 'thanks' in message:
+            response['message'] = "You are welcome! Have a nice day! <br> Bye!"
+            response['state'] = {'lastMessage': 'menu_today'}
+        elif 'name' in message or 'who' in message:
+            response['message'] = "I'm Prini the bot. <br> I can help you with the menu and ordering food."
+            response['state'] = {'lastMessage': 'menu_today'}
+        elif 'weather' in message or'climate' in message or 'temperature' in message:
+            response['message'] = "Hey, I'm a food bot. I can only help you with the menu and ordering food."
+            response['state'] = {'lastMessage': 'menu_today'}
+        elif 'steal my job' in message or 'steal my work' in message:
+            response['message'] = "I'm a bot for a resturant"
+            response['state'] = {'lastMessage': 'menu_today'}
+        elif 'connected to' in message or 'internet' in message:
+            response['message'] = "I'm hosted online but I can't surf Internet"
+            response['state'] = {'lastMessage': 'menu_today'}
         else:
             response['message'] = "I could not understand you. <br> Say 'hi' to start again."
             response['state'] = {'lastMessage': None}
@@ -196,9 +211,6 @@ def get_chatbot_response(message, state):
             response['message'] = "This food is not available today. <br> Would you like to know the menu for today?"
             response['state'] = {'lastMessage': 'menu_today'}
 
-    elif 'thank you' in message or 'thankyou' in message or 'thanks' in message:
-        response['message'] = "You are welcome! Have a nice day! <br> Bye!"
-        response['state'] = {'lastMessage': None}
     else:
         response['message'] = "Please say 'hi' to start again."
         response['state'] = {'lastMessage': None}
